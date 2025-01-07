@@ -1,0 +1,109 @@
+*HTML*
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="player">
+        <audio id="audioPlayer" controls>
+            <source src="song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button id="playPause">Play/Pause</button>
+            <button id="stop">Stop</button>
+            <button id="prev">Prev</button>
+            <button id="next">Next</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+```
+
+*CSS (styles.css)*
+```css
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.player {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+```
+
+*JavaScript (script.js)*
+```javascript
+const audioPlayer = document.getElementById('audioPlayer');
+const playPauseButton = document.getElementById('playPause');
+const stopButton = document.getElementById('stop');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+
+const songs = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
+let currentSongIndex = 0;
+
+playPauseButton.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseButton.textContent = 'Pause';
+    } else {
+        audioPlayer.pause();
+        playPauseButton.textContent = 'Play';
+    }
+});
+
+stopButton.addEventListener('click', () => {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+    playPauseButton.textContent = 'Play';
+});
+
+prevButton.addEventListener('click', () => {
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    audioPlayer.src = songs[currentSongIndex];
+    audioPlayer.play();
+    playPauseButton.textContent = 'Pause';
+});
+
+nextButton.addEventListener('click', () => {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    audioPlayer.src = songs[currentSongIndex];
+    audioPlayer.play();
+    playPauseButton.textContent = 'Pause';
+});
+```
+
+With this code, you'll have a basic music player that can play, pause, stop, and switch between songs. You'll need to replace `'song1.mp3'`, `'song2.mp3'`, and `'song3.mp3'` with the actual paths to your audio files.
